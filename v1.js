@@ -5,8 +5,15 @@ var points;
 var locTime;
 var iniTime;
 var vertices;
-var dx = 0.005;
-var dy = 0.005;
+// Random stefna fyrir boltann
+var speed = 0.01;
+var theta = 2*Math.random()*Math.PI;
+var dx = speed*Math.cos(theta);
+var dy = speed*Math.sin(theta);
+
+// Random upphafs staðsetning fyrir boltann
+var xOffset = 2*Math.random() - 1;
+var yOffset = Math.random() -0.5;
 
 window.onload = function init() {
 
@@ -33,10 +40,10 @@ window.onload = function init() {
         vec2( -0.1, 0.86 ),      // Efri spaði VN 5
         vec2(  0.1, 0.86 ),      // Efri spaði HN 6
         vec2(  0.1, 0.9 ),       // Efri spaði HE 7
-        vec2( -0.02, -0.035 ),   // Bolti VN 8
-        vec2( -0.02, 0.035 ),    // Bolti VE 9
-        vec2(  0.02, 0.035 ),    // Bolti HE 10
-        vec2(  0.02, -0.035 ),   // Bolti HN 11
+        vec2( -0.02 + xOffset, -0.035 + yOffset),   // Bolti VN 8
+        vec2( -0.02 + xOffset, 0.035 + yOffset),    // Bolti VE 9
+        vec2(  0.02 + xOffset, 0.035 + yOffset),    // Bolti HE 10
+        vec2(  0.02 + xOffset, -0.035 + yOffset),   // Bolti HN 11
     ];
 
     // Load the data into the GPU
@@ -67,7 +74,7 @@ window.onload = function init() {
                 higher_move = 0.0;
               } else {
                 lower_move = 0.04;
-                higher_move = -0.04;                
+                higher_move = -0.04;
               }
                 break;
             default:
@@ -96,11 +103,11 @@ function move_ball() {
     dx = -dx;
   }
   // Árekstur við efri spaða
-  if (vertices[9][1] >= 0.86 && vertices[5][0] < vertices[10][0] && vertices[9][0] < vertices[6][0]) {
+  if (vertices[9][1] >= 0.86 && vertices[9][1] <= 0.9 && vertices[5][0] < vertices[10][0] && vertices[9][0] < vertices[6][0]) {
     dy = -dy;
   }
   // Árekstur við neðri spaða
-  if (vertices[8][1] <= -0.86 && vertices[1][0] < vertices[11][0] && vertices[8][0] < vertices[2][0]){
+  if (vertices[8][1] <= -0.86 && vertices[8][1] >= -0.9 && vertices[1][0] < vertices[11][0] && vertices[8][0] < vertices[2][0]){
     dy = -dy;
   }
 
