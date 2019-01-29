@@ -3,11 +3,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
     <script id="vertex-shader" type="x-shader/x-vertex">
-
+      uniform float time;
       attribute vec4 vPosition;
 
       void main() {
-        gl_Position = vPosition;
+        vec4 t = vPosition;
+
+        //t.y = 0.5*sin(0.0015*time + 4.0*t.x) + 0.5*sin(0.0015*time + 8.0*t.y);
+
+        gl_Position = t;
       }
     </script>
     <script id="fragment-shader" type="x-shader/x-fragment">
